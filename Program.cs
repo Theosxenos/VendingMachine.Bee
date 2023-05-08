@@ -1,20 +1,26 @@
-﻿Dictionary<string, float> products = new Dictionary<string, float>()
-{
-    {"Boot", 2 },
-    {"Citroen", 5 },
-    {"Deur", 6.6f },
-    {"Egel", 5.33f },
-    {"Hooi", 10.03f },
+﻿using VendingMachine.Bee.Models;
 
+List<ProductModel> products = new List<ProductModel>()
+{
+    new ProductModel { Name = "Boot", Price = 2 },
+    new ProductModel { Name = "Citroen", Price = 5 },
+    new ProductModel { Name = "Deur", Price = 6.6f },
+    new ProductModel { Name = "Egel", Price = 5.33f },
+    new ProductModel { Name = "Hooi", Price = 10.03f },
 };
 
-Console.WriteLine("BEE Vending\n===========");
-Console.WriteLine("Het Menu:");
+Console.WriteLine("\t\tBEE Vending\t\t");
+Console.WriteLine("\t\t===========\t\t");
 
-foreach (var product in products)
+Console.WriteLine("Het Menu:\n");
+
+Console.WriteLine("Code\t\tNaam\t\tPrijs");
+Console.WriteLine("----------------------------------------------");
+for (int i = 0; i < products.Count; i++)
 {
+    ProductModel? product = products[i];
     // TODO format and align
-    Console.WriteLine($"{product.Key}\t\t{product.Value}");
+    Console.WriteLine($"{i}\t\t{product.Name}\t\t{product.Price}");
 }
 
 // Empty line for readability
@@ -26,8 +32,8 @@ do
     Console.WriteLine("Maak uw keuze:");
     
     selectedproduct = Console.ReadLine();
-    var productvalue = products[selectedproduct];
-    Console.WriteLine($"{selectedproduct}\t\t{productvalue}");
+    //var productvalue = products[selectedproduct];
+    //Console.WriteLine($"{selectedproduct}\t\t{productvalue}");
     
     Console.WriteLine("");
 
