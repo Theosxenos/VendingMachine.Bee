@@ -56,7 +56,13 @@ public class MainView
                 continue;
             }
 
-            int.TryParse(userinput, out productcode);
+            var parsed = int.TryParse(userinput, out productcode);
+            if (!parsed)
+            {
+                Console.WriteLine($"\nOngeldige invoer.");
+                continue;
+            }
+
             ShowProduct(productcode - 1);
 
             Console.WriteLine("");
