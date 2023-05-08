@@ -63,7 +63,7 @@ public class MainView
                 continue;
             }
 
-            ShowProduct(productcode - 1);
+            OrderProduct(productcode - 1);
 
             Console.WriteLine("");
 
@@ -72,9 +72,20 @@ public class MainView
         Console.WriteLine("\nBedankt voor uw bezoek.");
     }
 
-    private void ShowProduct(int productcode)
+    private void OrderProduct(int productcode)
     {
-        var product = vm.GetProduct(productcode);
-        Console.WriteLine($"\nProductnaam: {product.Name}\tProductprijs: {product.Price}");
+        try
+        {
+            var product = vm.OnTransaction(productcode);
+            Console.WriteLine($"U heeft gekocht: {product}");
+        }
+        catch (OutOfStockException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        catch (NotEnoughMoneyException e)
+        {
+            Console.WriteLine(e.Message);
+        }
     }
 }
