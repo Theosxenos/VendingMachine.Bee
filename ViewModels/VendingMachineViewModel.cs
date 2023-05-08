@@ -16,24 +16,30 @@ public class VendingMachineViewModel
 
     public ProductModel GetProduct(int id) => products[id];
 
+    public float GetOffer(int productcode, int amountbought) => GetProduct(productcode).Price * amountbought;
+
+
     /// <summary>
     ///     Executes a transaction for the given product, subtracting the product's price from the user's balance and decrementing the product's stock if it is available.
     /// </summary>
     /// <param name="product">The product being purchased.</param>
-    /// <returns>
-    ///     Returns 1 if the transaction is successful and the product's stock has been decremented. <br/>
-    ///     Returns -1 if the user does not have enough money to purchase the product. <br/>
-    ///     Returns -2 if the product is out of stock.
-    /// </returns>
-    public ProductModel CheckStock(int productCode)
+    /// <returns></returns>
+    public ProductModel CheckStock(int productCode, int amountBought)
     {
-        var toPurchaseProduct = products[productCode];
+        var toPurchaseProduct = GetProduct(productCode);
 
-        if(toPurchaseProduct.Stock == 0)
+        if(toPurchaseProduct.Stock < amountBought)
         {
-            throw new OutOfStockException(toPurchaseProduct.Name);
+            throw new NotEnoughInStockException(amountBought, toPurchaseProduct.Name);
         }
 
         return toPurchaseProduct;
     }
+
+    public void ReduceStock(int productCode, int amountBought)
+    {
+        var toPurchaseProduct = GetProduct(productCode);
+        toPurchaseProduct.Stock -= amountBought;
+    }
+
 }
