@@ -1,4 +1,4 @@
-﻿namespace VendingMachine.Bee.Models;
+﻿namespace VendingMachine.Bee;
 
 public class ProductModel
 {
