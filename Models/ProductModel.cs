@@ -10,6 +10,6 @@ public class ProductModel
 
     public override string ToString()
     {
-        return $"Productnaam: {Name}\tProductprijs: {Price}";
+        return $"Productnaam: {Name}\tProductprijs: {Price:C}";
     }
 }

@@ -4,8 +4,9 @@ internal class Program
 
     private static void Main(string[] args)
     {
-        var viewmodel = new VendingMachineViewModel();
-        var view = new MainView(viewmodel);
+        var userModel = new UserModel(1_000);
+        var viewModel = new VendingMachineViewModel();
+        var view = new MainView(viewModel, userModel);
         view.Run();
     }
 }

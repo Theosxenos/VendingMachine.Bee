@@ -12,8 +12,6 @@ public class VendingMachineViewModel
         new ProductModel { Name = "Micorosft C# Certificaat", Price = 10_000_000, Stock = 1337 },
     };
 
-    private UserModel user = new UserModel(1_000);
-
     public List<ProductModel> GetProducts() => products;
 
     public ProductModel GetProduct(int id) => products[id];
@@ -27,24 +25,15 @@ public class VendingMachineViewModel
     ///     Returns -1 if the user does not have enough money to purchase the product. <br/>
     ///     Returns -2 if the product is out of stock.
     /// </returns>
-    public ProductModel OnTransaction(int productCode)
+    public ProductModel CheckStock(int productCode)
     {
-        var purchasedProduct = products[productCode];
+        var toPurchaseProduct = products[productCode];
 
-        if(purchasedProduct.Stock == 0)
+        if(toPurchaseProduct.Stock == 0)
         {
-            throw new OutOfStockException(purchasedProduct.Name);
+            throw new OutOfStockException(toPurchaseProduct.Name);
         }
 
-        if(user.Balance < purchasedProduct.Price)
-        {
-            var balancediff = purchasedProduct.Price - user.Balance;
-            throw new NotEnoughMoneyException(balancediff);
-        }
-
-        user.SubtractMoney(purchasedProduct.Price);
-        purchasedProduct.Stock--;
-
-        return purchasedProduct;
+        return toPurchaseProduct;
     }
 }

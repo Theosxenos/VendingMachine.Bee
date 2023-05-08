@@ -3,9 +3,11 @@
 public class MainView
 {
     VendingMachineViewModel vm;
+    UserModel user;
 
-    public MainView(VendingMachineViewModel viewModel)
+    public MainView(VendingMachineViewModel viewModel, UserModel userModel)
     {
+        user = userModel;
         vm = viewModel;
     }
 
@@ -21,8 +23,8 @@ public class MainView
 
         Console.WriteLine("Het Menu:\n");
 
-        Console.WriteLine("Code\t\tNaam\t\tPrijs");
-        Console.WriteLine("----------------------------------------------");
+        Console.WriteLine("Code\t\tNaam\t\tPrijs\t\tVoorraad");
+        Console.WriteLine("----------------------------------------------------------");
 
         var products = vm.GetProducts();
 
@@ -30,7 +32,7 @@ public class MainView
         {
             ProductModel? product = products[i];
             // TODO format and align
-            Console.WriteLine($"{i + 1}\t\t{product.Name}\t\t{product.Price}");
+            Console.WriteLine($"{i + 1}\t\t{product.Name}\t\t{product.Price:C}\t\t{product.Stock}");
         }
 
         // Empty line for readability
@@ -76,8 +78,11 @@ public class MainView
     {
         try
         {
-            var product = vm.OnTransaction(productcode);
-            Console.WriteLine($"U heeft gekocht: {product}");
+            var product = vm.CheckStock(productcode);
+            user.PurchaseProduct(product.Price);
+
+            Console.WriteLine($"\nU heeft gekocht: {product}");
+            Console.WriteLine($"Uw nieuw balans is: {user.Balance:C}.");
         }
         catch (OutOfStockException e)
         {
