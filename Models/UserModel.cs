@@ -14,13 +14,13 @@ public class UserModel
         Balance += amount;
     }
 
-    public void PurchaseProduct(float purchasePrice)
+    public void PurchaseProduct(float purchasePrice, int amountBought)
     {
         if(purchasePrice > Balance)
         {
             throw new NotEnoughMoneyException(purchasePrice - Balance);
         }
 
-        Balance -= purchasePrice;
+        Balance -= purchasePrice * amountBought;
     }
 }

@@ -147,9 +147,10 @@ public class MainView
         try
         {
             var product = vm.CheckStock(productcode, amountbought);
-            user.PurchaseProduct(product.Price);
+            vm.ReduceStock(productcode, amountbought);
+            user.PurchaseProduct(product.Price, amountbought);
 
-            Console.WriteLine($"\nU heeft gekocht: {product}");
+            Console.WriteLine($"\nU heeft gekocht: {amountbought} van {product.Name} voor prijs {product.Price * amountbought:C}");
             Console.WriteLine($"Uw nieuw balans is: {user.Balance:C}.");
         }
         catch (NotEnoughInStockException e)
